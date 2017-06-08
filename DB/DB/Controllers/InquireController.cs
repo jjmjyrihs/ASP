@@ -9,22 +9,21 @@ namespace DB.Controllers
     public class InquireController : Controller
     {
         // GET: Inquire
-
-        public ActionResult Index(Model.BookData listdata)
+        public ActionResult Index(Model.Data Data)
         {
-
-            Service.SQL_Inquire SSI = new Service.SQL_Inquire();
-            List<Model.BookData> Data = new List<Model.BookData>();
-            if (listdata.Book_Search == null)
+            Service.SQL_Inquire SI = new Service.SQL_Inquire();
+            List<Model.Data> GetData = new List<Model.Data>();
+            GetData = SI.GetData(Data);
+            if (GetData.Count < 1)
             {
-                Data = SSI.Find("", true);
-                listdata.Book_Search = "";
+                return RedirectToAction("Non", "Inquire");
             }
-            else
-            {
-                Data = SSI.Find(listdata.Book_Search.ToString(), false);
-            }            
-            @ViewBag.result = Data;
+            ViewBag.GetData = GetData;
+            ViewBag.Data = Data;
+            return View();
+        }
+        public ActionResult Non()
+        {
             return View();
         }
     }

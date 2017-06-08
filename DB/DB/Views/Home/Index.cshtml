@@ -1,5 +1,5 @@
 ﻿@{
-    if (Request.Cookies["cookie"]!=null)
+    if (Request.Cookies["cookie"] != null)
     {
         ViewBag.Title = "Home Page";
         Layout = "~/Views/Shared/_Layout2.cshtml";
@@ -10,25 +10,58 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
-<div class="jumbotron">
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function Insert() {
+        location.href = '@Url.Action("Index","Insert")';
+    }
+</script>
+
     @using (Html.BeginForm("Index", "Inquire", FormMethod.Post))
-    {
-        <table  width="100%">            
+            {
+        <table style="border:3px #cccccc solid;" cellpadding="10" border="1" align="center" >
             <tr>
-                <td align="right"><input id="Book_Search" type="text" name="Book_Search"/></td>
-                <td style="padding-left:20px;"><input type="image" src="https://68.media.tumblr.com/avatar_e71f256cf55a_128.png" onClick="document.formname.submit();" /></td>
-          
-                <td style="padding-left:190px;"><input type="image" src="https://image.9game.cn/s/y9n/g/%E6%AC%A1%E5%85%83%E5%A4%A7%E4%BD%9C%E6%88%98-%E5%86%B7%E5%8D%B4%E4%B9%A6.png" onClick="document.formname.submit();" /></td>
-           
+                <td>訂單編號</td>
+                <td>@Html.TextBox("OrderId")</td>
+            </tr>
+            <tr>
+                <td>客戶名稱</td>
+                <td>@Html.TextBox("CustName")</td>
+            </tr>
+            <tr>
+                <td>負責員工</td>
+                <td>@Html.DropDownList("EmpName", (List<SelectListItem>)ViewBag.EmpName)</td>
+            </tr>
+            <tr>
+                <td>出貨公司</td>
+                <td>@Html.DropDownList("CpyName", (List<SelectListItem>)ViewBag.CpyName)</td>
+            </tr>
+            <tr>
+                <td>訂購日期</td>
+                <td>
+                    <input type="date" name="OrderDate" />
+                </td>
+            </tr>
+            <tr>
+                <td>需要日期</td>
+                <td>
+                    <input type="date" name="RequiredDate" />
+                </td>
+            </tr>
+            <tr>
+                <td>出貨日期</td>
+                <td>
+                    <input type="date" name="ShippedDate" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="新增訂單" onclick="Insert()"/>
+                </td>
+                <td>
+                    <input type="submit" value="查詢" />
+                    <input type="reset" value="清除" />
+                </td>
             </tr>
         </table>
     }
-    </div>
-
-
-
-<div>
-    <table>
-
-    </table>
-</div>

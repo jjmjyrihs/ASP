@@ -1,90 +1,68 @@
-﻿@{
-    if (Request.Cookies["cookie"]["Account"] != null)
-    {
-        ViewBag.Title = "Home Page";
-        Layout = "~/Views/Shared/_Layout2.cshtml";
-    }
-    else
-    {
-        ViewBag.Title = "Home Page";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script>
-    function HideData() {
-        $(".Change").hide("fast");
-    }
-    function ChangeData(id) {
-        if (id == "btn1") {
-            $(".Change").show("slow");
-            $(".Data").hide("slow");
-        } else {
-            $(".Change").hide("slow");
-            $(".Data").show("slow");
-        }
-    }
-</script>
-</div>
-<body onload="HideData()">
-    <div class="register-content">
-        <div class="Data">
-            <table cellpadding="10" align="center">
-                <tr>
-                    <td>姓名：</td>
-                    <td>@ViewBag.Data.Customer_Name</td>
-                </tr>
-                <tr>
-                    <td>E-Mail：</td>
-                    <td>@ViewBag.Data.Customer_Email</td>
-                </tr>
-                <tr>
-                    <td>手機：</td>
-                    <td>@ViewBag.Data.Customer_Cellphone</td>
-                </tr>                
-                <tr>      
-                    <td align="center" colspan="2">
-                        <button onclick="ChangeData(this.id)" id="btn1">變更資料</button>                        
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="Change">
-            @using (Html.BeginForm("Update", "Update", FormMethod.Post))
-            {
-                <table cellpadding="10" align="center">
-                    <tr>
-                        <td>姓名：</td>
-                        <td>@Html.TextBox("Customer_Name")</td>
-                    </tr>
-                    <tr>
-                        <td>手機：</td>
-                        <td>@Html.TextBox("Customer_Cellphone")</td>
-                    </tr>
-                    <tr>
-                        <td>密碼：</td>
-                        <td>@Html.Password("Customer_Password")</td>
-                    </tr>
-                    <tr>
-                        <td>密碼確認：</td>
-                        <td><input type="password" name="PwdCk" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" value="確定變更" name="submitButton" />
-                        </td>
-                        <td align="center">
-                            <input type="reset" value="清除" />                        
-                            <input type="button" id="btn2" onclick="ChangeData()" value="返回上頁" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td hidden>
-                            @Html.TextBox("Customer_Email")
-                        </td>
-                    </tr>
-                </table>
-            }
-        </div>
-    </div>
-</body>
+
+@using (Html.BeginForm("Index", "Inquire", FormMethod.Post))
+{
+    <table style="border:3px #cccccc solid; text-align:center" cellpadding="10" border="1" align="center">
+        <tr>
+            <td>訂單編號</td>
+            <td colspan="3">@ViewBag.Data.OrderId</td>
+        </tr>
+        <tr>
+            <td>客戶名稱</td>
+            <td colspan="3">@Html.DropDownList("EmpName", (List<SelectListItem>)ViewBag.EmpName, new { ListItem = 3})</td>
+        </tr>
+        <tr>
+            <td>負責員工</td>
+            <td colspan="3">@Html.DropDownList("EmpName", (List<SelectListItem>)ViewBag.EmpName, new { SelectValue =3})</td>
+        </tr>
+        <tr>
+            <td>訂單日期</td>
+            <td><input type="date" name="OrderDate" value="@ViewBag.Data.OrderDate"/>                  
+            <td>需要日期</td>
+            <td><input type="date" name="RequiredDate" value="@ViewBag.Data.RequiredDate" /></td>
+        </tr>
+        <tr>
+            <td>出貨日期</td>
+            <td><input type="date" name="ShippedDate" value="@ViewBag.Data.ShippedDate"/></td>
+            <td>運費</td>
+            <td><input type="text" value="500"/></td>
+        </tr>
+        <tr>
+            <td>出貨公司名稱</td>
+            <td colspan="3">@Html.DropDownList("CpyName", (List<SelectListItem>)ViewBag.CpyName, new { value="test"})</td>
+        </tr>
+        <tr>
+            <td>出貨國家</td>
+            <td>@Html.TextBox("ShipCountry")</td>
+            <td>出貨城市</td>
+            <td>@Html.TextBox("ShipCity")</td>
+        </tr>
+        <tr>
+            <td>出貨地區</td>
+            <td>@Html.TextBox("ShipRegion")</td>
+            <td>郵遞區號</td>
+            <td>@Html.TextBox("ShipPostalCode")</td>
+        </tr>
+        <tr>
+            <td>出貨地址</td>
+            <td>@Html.TextBox("ShipAddress")</td>
+            <td>出貨說明</td>
+            <td>@Html.TextBox("Content")</td>
+        </tr>
+        <tr>
+            <td>訂單金額總計</td>
+            <td align="right" colspan="3">50000</td>
+        </tr>
+        <tr>
+            <td><input type="button" onclick="javascript:window.history.go(-1);" value="返回上一頁"></td>
+            <td colspan="3">
+                <input type="submit" value="存檔"/>
+                <input type="submit" value="刪除本筆訂單" />
+            </td>
+        </tr>
+    </table>
+}

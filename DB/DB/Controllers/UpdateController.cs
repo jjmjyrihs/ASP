@@ -9,39 +9,104 @@ namespace DB.Controllers
     public class UpdateController : Controller
     {
         // GET: Update
-        public ActionResult Index()
+        public ActionResult Index(Model.Data Data)
         {
-            string Account="";
-            Service.SQL_CustomerData SSC = new Service.SQL_CustomerData();
-            Model.CustomerData Data = new Model.CustomerData();
-            if (Request.Cookies["cookie"] == null)
-            {
-                return RedirectToAction("RedirectToLogin", "Login");
-            }
-            else
-            {
-                Account = Request.Cookies["cookie"]["Account"].ToString();
-            }
-            
-            Data = SSC.getData(Account);
             ViewBag.Data = Data;
+            DropDownListMakeEmp();
+            DropDOwnListMakeCpy();
             return View();
         }
 
-        public ActionResult Update(Model.CustomerData Data)
+        public void DropDOwnListMakeCpy()
         {
-            Service.SQL_CustomerUpdate SCU = new Service.SQL_CustomerUpdate();
-            Boolean Check = false;
-            Check = SCU.Update(Data);
-            if (Check)
+            List<SelectListItem> CpyName = new List<SelectListItem>();
+            CpyName.Add(new SelectListItem()
             {
-                ViewBag.Data = "修改成功!";
-            }
-            else
+                Text = ViewBag.Data.CpyName,
+                Value = "null"
+            });
+            CpyName.Add(new SelectListItem()
             {
-                ViewBag.Data = "修改失敗!";
-            }                            
-            return View();
+                Text = "GVSUA",
+                Value = "1",
+                Selected = true
+            });
+            CpyName.Add(new SelectListItem()
+            {
+                Text = "ETYNR",
+                Value = "2"
+            });
+            CpyName.Add(new SelectListItem()
+            {
+                Text = "ZHISN",
+                Value = "3"
+            });
+            ViewBag.CpyName = CpyName;
+        }
+        public void DropDownListMakeEmp()
+        {
+            List<SelectListItem> EmpName = new List<SelectListItem>();
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "無",
+                Value = "null"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Davis-Sara",
+                Value = "1"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Funk-Don",
+                Value = "2",                
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Lew-Judy",
+                Value = "3"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Peled-Yael",
+                Value = "4"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Buck-Sven",
+                Value = "5"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Suurs-Paul",
+                Value = "6"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "King-Russell",
+                Value = "7"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Cameron-Maria",
+                Value = "8"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Dolgopyatova-Zoya",
+                Value = "9"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Brown-John",
+                Value = "11"
+            });
+            EmpName.Add(new SelectListItem()
+            {
+                Text = "Harris-Bill",
+                Value = "12"
+            });
+            ViewBag.EmpName = EmpName;
         }
     }
 }
